@@ -54,5 +54,10 @@
             <artifactId>json</artifactId>
             <version>20201115</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.1</version>
+        </dependency>
     </dependencies>
 </project>

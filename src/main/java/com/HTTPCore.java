@@ -16,11 +16,11 @@ public class HTTPCore {
     /*
     * @param port
     * */
-    private HttpServer server;
+    protected HttpServer server = null;
 
     public HTTPCore(int port){
         try {
-            server = HttpServer.create(new InetSocketAddress(8000), 0);
+            server = HttpServer.create(new InetSocketAddress(port), 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,14 +28,13 @@ public class HTTPCore {
 
     public void startHTTP(){
         try {
-            // setup the socket address
             server.createContext("/test", new TestConn());
             server.setExecutor(null); // creates a default executor
             server.start();
             server.createContext("/api/testConn", new TestConn());
 
         } catch (Exception exception) {
-            System.out.println("Failed to create HTTPS server on port " + 8000 + " of localhost");
+            System.out.println("Failed to create HTTP server");
             exception.printStackTrace();
 
         }
