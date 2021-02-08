@@ -1,5 +1,7 @@
 package com;
 
+import com.handle.Api;
+import com.handle.GenerateToken;
 import com.handle.TestConn;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpsConfigurator;
@@ -28,10 +30,11 @@ public class HTTPCore {
 
     public void startHTTP(){
         try {
-            server.createContext("/test", new TestConn());
             server.setExecutor(null); // creates a default executor
             server.start();
             server.createContext("/api/testConn", new TestConn());
+            server.createContext("/api", new Api());
+            server.createContext("/api/gentoken", new GenerateToken());
 
         } catch (Exception exception) {
             System.out.println("Failed to create HTTP server");
