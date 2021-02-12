@@ -44,6 +44,7 @@ Code:
 - 14 - say | body: player | status, body: none
 - 15 - whitelist bool | body: none | status, body: none
 - 16 - whitelist list | body: none | status, body: list <array>
+- 17 - whitelist player check | body: player | body: boolean
 
 ---------------------------------
 #### **Example Request**
