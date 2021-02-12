@@ -33,8 +33,8 @@ Code:
 - 0 - exit server
 - 1 - restart
 - 2 - try on
-- 5 - get player list | body: none | status, body: list: jsonarray
-- 6 - ban | body: player, reason, expires, source, | status, body: none
+- 5 - get player list | body: none | status, body: players: jsonarray
+- 6 - ban | body: player, reason, expires, user | status, body: none
 - 7 - kick | body: player, message | status, body: none
 - 8 - tps | body: none | status, body: value
 - 9 - whitelist on | body: none | status, body: status, 
@@ -43,12 +43,12 @@ Code:
 - 12 - add whitelist | body: player | status, body: none
 - 13 - tp | body: player | status, body: none
 - 14 - say | body: player | status, body: none
-
+- 15 - whitelist bool | body: none | status, body: none
 
 ---------------------------------
 #### **Example Request**
 
-Ban player Gauza_pauza with reason "bo tak" in expires permament with source from android 
+Ban player Gauza_pauza with reason "bo tak" in expires permament with source from user root 
 
 **GET api.lagpixel.pl/api/**
 
@@ -63,7 +63,7 @@ Ban player Gauza_pauza with reason "bo tak" in expires permament with source fro
        "player": "gauza_pauza",
        "reason": "bo tak",
        "expires": "perm",
-       "source": "android"
+       "source": "user"
         }
     }
 
