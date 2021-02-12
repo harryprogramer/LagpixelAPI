@@ -105,7 +105,7 @@ _api.lagpixel.pl/api/gentoken_
 
 --------
 
-###### PROTOCOL VERSION - 012
+###### PROTOCOL VERSION - 08
 ###### ANDROID VERSION - 010
 
 
