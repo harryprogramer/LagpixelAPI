@@ -2,6 +2,7 @@ package util;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,11 +17,6 @@ import java.time.format.DateTimeFormatter;
 * SSS - milisekundy
 * */
 public class GetTime {
-    private static final StringBuilder dateformatter = new StringBuilder();
-
-    static {
-        dateformatter.setLength(0);
-    }
 
     public enum TimeFormat{
         YEARS,
@@ -34,9 +30,8 @@ public class GetTime {
         SLASH
     }
 
-    public static String getTime(@NotNull TimeFormat... timeFormats){
-        DateTimeFormatter dtf;
-        LocalDateTime now;
+    public static DateTimeFormatter DateTimeFormat(@NotNull TimeFormat... timeFormats){
+        StringBuilder dateformatter = new StringBuilder();
         for(TimeFormat timeFormat : timeFormats) {
             switch (timeFormat) {
                 case SLASH:
@@ -70,8 +65,16 @@ public class GetTime {
                     throw new IllegalStateException("Nieznany format klasy enum TimeFormat util/GetTime.java 50 line");
             }
         }
-        dtf = DateTimeFormatter.ofPattern(dateformatter.toString());
-        now = LocalDateTime.now();
-        return dtf.format(now);
+        return DateTimeFormatter.ofPattern(dateformatter.toString());
     }
+
+    public static DateTimeFormatter getTimeFormat(@NotNull TimeFormat... timeFormats){
+        return DateTimeFormat(timeFormats);
+    }
+
+    public static String getTimeString(@NotNull TimeFormat... timeFormats){
+        LocalDateTime now = LocalDateTime.now();
+        return getTimeFormat(timeFormats).format(now);
+    }
+
 }

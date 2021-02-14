@@ -1,7 +1,7 @@
 # LagpixelAPI
 https://api.lagpixel.pl
 
-API for Android Minecraft Server Menegment, 
+API for Android Minecraft com.Server Menegment, 
 Features:
 - player list
 - close, restart server
