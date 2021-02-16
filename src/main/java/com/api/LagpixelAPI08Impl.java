@@ -3,6 +3,7 @@ package com.api;
 import com.LagpixelAPI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import util.Logger;
 
 import java.util.Objects;
 
@@ -12,35 +13,39 @@ class LagpixelAPI08Impl implements LagpixelAPI {
 
     @Override
     public String getPlayerList() {
-        return null;
+        return PlayerList.JSON();
     }
 
     @Override
     public void connectToAPI() {
         if(Objects.isNull(socketCore)){
             socketCore = new SocketCore();
-            socketCore.connectToAPI();
+            if(!(socketCore.getConnBoolean())) {
+                socketCore.connectToAPI();
+            }
+        }else{
+            if(!(socketCore.getConnBoolean()))
+                socketCore.connectToAPI();
+            else
+                Logger.Log_ln("Połączenie z API już istnieje", Logger.Level.WARN, Logger.Type.SYSTEM);
         }
     }
 
     @Override
-    public boolean closeConnectAPI() {
-        return false;
-    }
-
-    @Override
-    public boolean checkAPIConn() {
-        return false;
+    public void closeConnectAPI() {
+        socketCore.closeConn();
     }
 
     @Override
     public void setPort(int port) {
         SocketCore.setPort(port);
+        Logger.Log_ln("Port is now: " + SocketCore.getPort(), Logger.Level.INFO, Logger.Type.SYSTEM);
     }
 
     @Override
     public void setInetAddress(String inetAddress) {
         SocketCore.setInetAddress(inetAddress);
+        Logger.Log_ln("IP address is now: " + SocketCore.getHost(), Logger.Level.INFO, Logger.Type.SYSTEM);
     }
 
     @Override
@@ -50,7 +55,12 @@ class LagpixelAPI08Impl implements LagpixelAPI {
 
     @Override
     public int getPort() {
-        return SocketCore.port;
+        if(!(Objects.isNull(socketCore))) {
+            return SocketCore.getPort();
+        }else{
+            Logger.Log_ln("Attempted to get an port without creating a server instance", Logger.Level.CRIT, Logger.Type.SYSTEM);
+            return 0;
+        }
     }
 
     @Override
@@ -105,7 +115,12 @@ class LagpixelAPI08Impl implements LagpixelAPI {
 
     @Override
     public String getInetAddress() {
-        return null;
+        if(!(Objects.isNull(socketCore))) {
+            return SocketCore.getHost();
+        }else{
+            Logger.Log_ln("Tried to get ip without earlier setting", Logger.Level.WARN, Logger.Type.SYSTEM);
+            return null;
+        }
     }
 
 

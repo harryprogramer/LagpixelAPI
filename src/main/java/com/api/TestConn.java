@@ -4,14 +4,15 @@ import org.json.JSONObject;
 import util.Logger;
 
 class TestConn {
-    static SocketCore getServer =  SocketCore.getServer();
+    static SocketCore getServer = SocketCore.getServer();
     protected static boolean testAPI(){
         JSONObject response;
         String status;
         String messageresponse = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("0", null));
-        Logger.Log_ln("Receive response : " + messageresponse, Logger.Level.DEBUG, Logger.Type.PAPER);
         if(messageresponse != null && !messageresponse.equals("")){
-            System.out.println(messageresponse);
+            if(messageresponse.equals("&timeout")){
+                return false;
+            }
             response = new JSONObject(messageresponse);
             status = response.getString("status");
             Logger.Log_ln("Status : " + status, Logger.Level.DEBUG, Logger.Type.PAPER);

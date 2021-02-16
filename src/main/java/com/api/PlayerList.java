@@ -8,11 +8,16 @@ public class PlayerList{
     static SocketCore server = SocketCore.getServer();
     public static String JSON(){
         String data = server.sendMessage(ResponseJSON.SendQuestionToPaper("5", null));
+        if(data == null){
+            return ResponseJSON.ERRORResponseToClientAPI("2", "no connection with api", "socket");
+        }
         JSONObject recvJSON = new JSONObject(data);
+        JSONObject bodyrecvJSON;
         JSONArray playerArray;
         String status = recvJSON.getString("status").toUpperCase();
         if(status.equals("OK")) {
-            playerArray = recvJSON.getJSONArray("players");
+            bodyrecvJSON = recvJSON.getJSONObject("body");
+            playerArray = bodyrecvJSON.getJSONArray("players");
             return ResponseJSON.OKResponseToClient(new JSONObject().put("players", playerArray));
         }else if(status.equals("ERROR")){
             String errorcode = recvJSON.getString("errorCode");

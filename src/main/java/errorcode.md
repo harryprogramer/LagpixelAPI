@@ -60,4 +60,7 @@ e.g
     - e24 - 'message' key not found or incorrect
 
 #LAGPIXEL
-    e1 - unknown paper api response
+    - e1 - unknown paper api response
+   
+    - e2 - no connection with paper api 
+    

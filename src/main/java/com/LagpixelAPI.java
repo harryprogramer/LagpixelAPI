@@ -36,9 +36,7 @@ public interface LagpixelAPI {
 
     boolean testAPIConn();
 
-    boolean closeConnectAPI();
-
-    boolean checkAPIConn();
+    void closeConnectAPI();
 
     void setPort(int port);
 
