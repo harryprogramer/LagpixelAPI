@@ -3,8 +3,8 @@ package com;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("unused")
 public interface LagpixelAPI {
-
 
     String getPlayerList();
 
@@ -30,11 +30,13 @@ public interface LagpixelAPI {
 
     String getInetAddress();
 
+    boolean testAPIConn();
+
+    boolean checkAPIConn();
+
     void connectToAPI();
 
     void setInetAddress(String inetAddress);
-
-    boolean testAPIConn();
 
     void closeConnectAPI();
 

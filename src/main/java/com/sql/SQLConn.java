@@ -3,9 +3,7 @@ package com.sql;
 import util.Color;
 import util.Logger;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class SQLConn {
     private boolean registrSQL = false;
@@ -44,6 +42,26 @@ public class SQLConn {
                     , Logger.Level.CRIT, Logger.Type.SYSTEM);
             return false;
         }
+    }
+
+    public boolean checkPassword(String login, String password) throws Exception {
+        if(checkDBconn()){
+            String sql = "select password from Users where login = '" + login + "';";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs != null && rs.next()) {
+                    return rs.getString(1).equals(password);
+                }
+                return false;
+            } catch (Exception ex){
+                Logger.Log_ln("Something from while getting value from database, cause: [" + Color.Red + ex.getMessage() + Color.Reset + "]", Logger.Level.WARN, Logger.Type.SYSTEM);
+                return false;
+            }
+        }else{
+            Logger.Log_ln("Trying to get value from database, but connection with database is lost", Logger.Level.INFO, Logger.Type.SYSTEM);
+            return false;
+        }
+
     }
 
     protected void setDbUrl(String url){

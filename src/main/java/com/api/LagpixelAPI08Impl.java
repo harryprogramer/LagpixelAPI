@@ -13,7 +13,16 @@ class LagpixelAPI08Impl implements LagpixelAPI {
 
     @Override
     public String getPlayerList() {
-        return PlayerList.JSON();
+        return PlayerList.getPlayerArray();
+    }
+
+    @Override
+    public boolean checkAPIConn() {
+        if(Objects.isNull(socketCore)){
+            return false;
+        }else{
+            return socketCore.getConnBoolean();
+        }
     }
 
     @Override

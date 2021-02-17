@@ -1,6 +1,9 @@
 <component name="ProjectDictionaryState">
   <dictionary name="szymo">
     <words>
+      <w>booleantest</w>
+      <w>errcode</w>
+      <w>errorreason</w>
       <w>levelstring</w>
       <w>logmessage</w>
       <w>messageresponse</w>

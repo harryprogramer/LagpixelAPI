@@ -70,7 +70,7 @@ class SocketCore {
                             if(socket == null) {
                                 connectToAPI();
                             }
-                            return "&noconn";
+                            return null;
                         }else{
                             Logger.Log_ln("Recived message > " + data, Logger.Level.DEBUG, Logger.Type.PAPER);
                             return data;
@@ -90,10 +90,6 @@ class SocketCore {
         }
     }
     protected synchronized void connectToAPI() {
-        Thread thread;
-        thread = new Thread() {
-            @Override
-            public void run() {
                 synchronized (this) {
                     while (true) {
                         try {
@@ -153,11 +149,9 @@ class SocketCore {
                             e.printStackTrace();
                         }
                     }
-                }
             }
-        };
-        thread.start();
-    }
+        }
+
 
     protected void closeConn(){
         if(!(socket.isClosed())){

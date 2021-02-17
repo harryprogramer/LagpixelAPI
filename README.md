@@ -41,10 +41,10 @@ Code:
 - 10 - whitelist off | body: none | status, body: status, 
 - 11 - remove whitelist | body: player | status, body: none
 - 12 - add whitelist | body: player | status, body: none
-- 14 - say | body: player | status, body: none
-- 15 - whitelist bool | body: none | status, body: none
+- 14 - say | body: player, message | status, body: none
+- 15 - whitelist bool | body: none | status, body: whitelistbool
 - 16 - whitelist list | body: none | status, body: list <array>
-- 17 - whitelist player check | body: player | body: boolean
+- 17 - whitelist player check | body: player | body: bool
 
 ---------------------------------
 #### **Example Request**

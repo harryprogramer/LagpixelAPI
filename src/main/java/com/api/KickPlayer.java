@@ -2,12 +2,11 @@ package com.api;
 
 import org.json.JSONObject;
 
-
-public class BanPlayer {
+class KickPlayer {
     static SocketCore getServer = SocketCore.getServer();
-    public static String ban(String player, String reason, String expires){
+    public static String kick(String player, String kickReason){
         JSONObject responseJSON;
-        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("6", new JSONObject().put("player", player).put("reason", reason).put("expires", expires).put("user", "")));
+        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("7", new JSONObject().put("player", player).put("message", kickReason)));
         try{
             responseJSON = new JSONObject(message);
         }catch (Exception e){

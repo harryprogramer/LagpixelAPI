@@ -23,9 +23,11 @@ public class Logger {
 
 
     public static void setDebug(boolean debugbool){
-        if(debugbool){
-            debug = true;
-        }
+        debug = debugbool;
+    }
+
+    public static boolean getDebug(){
+        return debug;
     }
 
     public enum Level{

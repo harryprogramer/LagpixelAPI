@@ -8,4 +8,6 @@ public interface API {
     void registrSQL();
 
     boolean checkDBConn();
+
+    boolean checkPassword(String login, String password);
 }

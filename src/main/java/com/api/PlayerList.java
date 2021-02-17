@@ -6,11 +6,16 @@ import org.json.JSONObject;
 
 public class PlayerList{
     static SocketCore server = SocketCore.getServer();
-    public static String JSON(){
+    public static String getPlayerArray(){
         String data = server.sendMessage(ResponseJSON.SendQuestionToPaper("5", null));
         if(data == null){
             return ResponseJSON.ERRORResponseToClientAPI("2", "no connection with api", "socket");
+        }else{
+            if(data.equals("&timeout")){
+                return ResponseJSON.ERRORResponseToClientPaper("5", "paper timeout", "5");
+            }
         }
+
         JSONObject recvJSON = new JSONObject(data);
         JSONObject bodyrecvJSON;
         JSONArray playerArray;

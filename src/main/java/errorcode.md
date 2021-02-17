@@ -63,4 +63,9 @@ e.g
     - e1 - unknown paper api response
    
     - e2 - no connection with paper api 
-    
+
+    - e3 - incorrect paper response to system
+
+    - e4 - paper error but invalid response errorCode or reason
+
+    - e5 - paper timeout

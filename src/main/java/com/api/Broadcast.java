@@ -2,12 +2,12 @@ package com.api;
 
 import org.json.JSONObject;
 
-
-public class BanPlayer {
+public class Broadcast {
     static SocketCore getServer = SocketCore.getServer();
-    public static String ban(String player, String reason, String expires){
+
+    public static String sayToServer(String player, String broadcastMessage){
         JSONObject responseJSON;
-        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("6", new JSONObject().put("player", player).put("reason", reason).put("expires", expires).put("user", "")));
+        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("7", new JSONObject().put("player", player).put("message", broadcastMessage)));
         try{
             responseJSON = new JSONObject(message);
         }catch (Exception e){
