@@ -7,7 +7,7 @@ public class Broadcast {
 
     public static String sayToServer(String player, String broadcastMessage){
         JSONObject responseJSON;
-        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("7", new JSONObject().put("player", player).put("message", broadcastMessage)));
+        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("14", new JSONObject().put("user", player).put("message", broadcastMessage)));
         try{
             responseJSON = new JSONObject(message);
         }catch (Exception e){

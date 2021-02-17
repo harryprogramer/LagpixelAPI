@@ -139,7 +139,7 @@ class Whitelist {
         if(responseJSON.getString("status").equalsIgnoreCase("OK")){
             JSONArray list;
             try{
-                list = responseJSON.getJSONArray("list");
+                list = responseJSON.getJSONObject("body").getJSONArray("list");
             }catch (Exception ignored){
                 return ResponseJSON.ERRORResponseToClientPaper("3", "incorrect paper response", "16");
             }

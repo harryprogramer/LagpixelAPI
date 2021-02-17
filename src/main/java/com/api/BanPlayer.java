@@ -3,7 +3,7 @@ package com.api;
 import org.json.JSONObject;
 
 
-public class BanPlayer {
+class BanPlayer {
     static SocketCore getServer = SocketCore.getServer();
     public static String ban(String player, String reason, String expires){
         JSONObject responseJSON;

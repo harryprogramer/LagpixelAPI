@@ -8,7 +8,7 @@ public interface LagpixelAPI {
 
     String getPlayerList();
 
-    String banPlayer(@NotNull String player, @Nullable String reason, int expires);
+    String banPlayer(@NotNull String player, @Nullable String reason, String expires);
 
     String kickPlayer(@NotNull String player, @Nullable String message);
 
@@ -29,6 +29,8 @@ public interface LagpixelAPI {
     String checkIfPlayerWhitelist(@NotNull String player);
 
     String getInetAddress();
+
+    String getTPS();
 
     boolean testAPIConn();
 

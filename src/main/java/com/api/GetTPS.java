@@ -1,5 +1,6 @@
 package com.api;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 class GetTPS {
@@ -13,9 +14,9 @@ class GetTPS {
             return ResponseJSON.ERRORResponseToClientPaper("3", "incorrect paper response", "6");
         }
         if(responseJSON.getString("status").equalsIgnoreCase("OK")){
-            String tps;
+            JSONArray tps;
             try{
-                tps = responseJSON.getJSONObject("body").getString("value");
+                tps = responseJSON.getJSONObject("body").getJSONArray("tps");
             }catch (Exception ignored){
                 return ResponseJSON.ERRORResponseToClientPaper("3", "incorrect paper response", "6");
             }

@@ -14,6 +14,7 @@ public class Console extends Thread{
     final Scanner scanner = new Scanner(System.in);
     final LagpixelAPI lagPixelApi = LagpixelAPI08.getInstance();
     final API sqlAPI = SQL.getInstance();
+    final Tests tests = new Tests();
 
     @Override
     public void run() {
@@ -38,7 +39,7 @@ public class Console extends Thread{
                         lagPixelApi.connectToAPI();
                         break;
                     case "functest":
-                        Tests.testfunction();
+                        tests.testfunction();
                         break;
                     case "debug":
                         if (Logger.getDebug()) {

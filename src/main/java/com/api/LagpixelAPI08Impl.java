@@ -73,53 +73,58 @@ class LagpixelAPI08Impl implements LagpixelAPI {
     }
 
     @Override
-    public String banPlayer(@NotNull String player, @Nullable String reason, int expires) {
-        return null;
+    public String banPlayer(@NotNull String player, @Nullable String reason, String expires) {
+        return BanPlayer.ban(player, reason, expires);
     }
 
     @Override
     public String kickPlayer(@NotNull String player, @Nullable String message) {
-        return null;
+        return KickPlayer.kick(player, message);
     }
 
     @Override
     public String whitelistON() {
-        return null;
+        return Whitelist.whitelistON();
     }
 
     @Override
     public String whitelistOFF() {
-        return null;
+        return Whitelist.whitelistOFF();
     }
 
     @Override
     public String removeFromWhitelist(@NotNull String player) {
-        return null;
+        return Whitelist.removeFromWhitelist(player);
     }
 
     @Override
     public String addToWhitelist(@NotNull String player) {
-        return null;
+        return Whitelist.addWhitelist(player);
     }
 
     @Override
     public String BroadcastMessage(@NotNull String message, @NotNull String user) {
-        return null;
+        return Broadcast.sayToServer(user, message);
     }
 
     @Override
     public String whitelistStatus() {
-        return null;
+        return Whitelist.whitelistBool();
+    }
+
+    @Override
+    public String getTPS() {
+        return GetTPS.getTPS();
     }
 
     @Override
     public String whitelistListPlayer() {
-        return null;
+        return Whitelist.whitelistList();
     }
 
     @Override
     public String checkIfPlayerWhitelist(@NotNull String player) {
-        return null;
+        return Whitelist.checkPlayerWhitelist(player);
     }
 
     @Override

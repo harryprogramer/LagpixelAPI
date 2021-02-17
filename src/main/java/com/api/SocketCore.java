@@ -59,7 +59,7 @@ class SocketCore {
     protected String sendMessage(String message){
         if(!(Objects.isNull(socket))) {
             try {
-                Logger.Log_ln("Processing request", Logger.Level.INFO, Logger.Type.SYSTEM);
+                Logger.Log_ln("Processing request", Logger.Level.DEBUG, Logger.Type.SYSTEM);
                 socket.setSoTimeout(5000);
                 Logger.Log_ln("Sending message > " + message, Logger.Level.DEBUG, Logger.Type.SYSTEM);
                 writer.println(message);

@@ -69,3 +69,5 @@ e.g
     - e4 - paper error but invalid response errorCode or reason
 
     - e5 - paper timeout
+
+    - e6 - incorrect paper response, body: bool, is incorrect
