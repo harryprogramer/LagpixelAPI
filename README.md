@@ -54,17 +54,18 @@ Ban player Gauza_pauza with reason "bo tak" in expires permament with source fro
 **GET api.lagpixel.pl/api/**
 
     {
-     "user": "root",
-     "password": "root",
      "token": "token",
      "code": "7",
-     "version_android": "010",
      "version_protocol": "012",
      "body": {
        "player": "gauza_pauza",
        "reason": "bo tak",
        "expires": "perm",
        "source": "user"
+        }
+    "auth": {
+        "user": "root",
+        "password": "root",
         }
     }
 

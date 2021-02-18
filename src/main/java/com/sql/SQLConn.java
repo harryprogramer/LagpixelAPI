@@ -26,13 +26,7 @@ public class SQLConn {
                             , Logger.Level.INFO, Logger.Type.SYSTEM);
                     return false;
                 }
-                if (conn != null) {
-                    Logger.Log_ln("SQL connect succesful", Logger.Level.INFO, Logger.Type.SYSTEM);
-                    return true;
-                } else {
-                    Logger.Log_ln("SQL connect unsuccessful", Logger.Level.INFO, Logger.Type.SYSTEM);
-                    return false;
-                }
+                return conn != null;
             }else{
                 Logger.Log_ln("Trying to test SQL Server without set dbUrl", Logger.Level.CRIT, Logger.Type.SYSTEM);
                 return false;

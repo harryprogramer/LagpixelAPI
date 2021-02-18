@@ -59,6 +59,7 @@ e.g
     
     - e24 - 'message' key not found or incorrect
 
+
 #LAGPIXEL
     - e1 - unknown paper api response
    
@@ -71,3 +72,13 @@ e.g
     - e5 - paper timeout
 
     - e6 - incorrect paper response, body: bool, is incorrect
+
+    - e7 - incorrect json structure
+
+    - e8 - invalid id code
+    
+    - e8 - id code out of range
+
+    - e9 - invalid body key
+
+    - e10 - invalid auth data

@@ -21,7 +21,6 @@ class SQLImpl implements API {
 
     @Override
     public boolean checkDBConn() {
-        Logger.Log_ln("Starting test...", Logger.Level.INFO, Logger.Type.SYSTEM);
         if (sqlConn != null) {
             return sqlConn.checkDBconn();
         } else {

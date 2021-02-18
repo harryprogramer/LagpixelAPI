@@ -1,9 +1,12 @@
 package com;
 
-import com.Main;
+import java.time.LocalDateTime;
 
 public class Server {
-    public static void main(String[] args) throws InterruptedException {
+    static LocalDateTime startTime = LocalDateTime.now();
+    public static final String PROTOCOL_VERSION = "08";
+
+    public static void main(String[] args) {
         new Main().MainProcess();
     }
 }

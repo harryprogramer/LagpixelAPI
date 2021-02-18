@@ -10,6 +10,7 @@
       <w>noconn</w>
       <w>recv</w>
       <w>registr</w>
+      <w>serversthread</w>
       <w>sethost</w>
       <w>setport</w>
       <w>typestring</w>
