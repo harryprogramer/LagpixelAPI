@@ -52,7 +52,7 @@ public class Main {
         Properties properties = new Properties();
         properties.setProperty("spring.main.banner-mode", "off");
         properties.setProperty("logging.pattern.console", "");
-        properties.setProperty("server.port", "80");
+        properties.setProperty("server.port", "190");
         application.setDefaultProperties(properties);
     }
 

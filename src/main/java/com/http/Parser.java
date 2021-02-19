@@ -122,6 +122,10 @@ public class Parser {
                 return lagpixelAPI.checkIfPlayerWhitelist(player);
             }
 
+            case 18: {
+                return ResponseJSON.OKResponseToClient(null);
+            }
+
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "json structure not valid");
         }

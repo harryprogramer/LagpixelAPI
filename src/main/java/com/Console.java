@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressWarnings("InfiniteLoopStatement")
 public class Console extends Thread{
-    final Scanner scanner = new Scanner(System.in);
     final LagpixelAPI lagPixelApi = LagpixelAPI08.getInstance();
     final API sqlAPI = SQL.getInstance();
     final Tests tests = new Tests();
@@ -56,73 +55,78 @@ public class Console extends Thread{
                     }
                 }
                 Logger.Log_ln("Starting console...", Logger.Level.INFO, Logger.Type.SYSTEM);
+                String arg;
                 while (consoleBoolean.get()) {
                     synchronized (this) {
-                        String arg = scanner.nextLine().trim().toLowerCase();
-                        switch (arg) {
-                            case "testconn": {
-                                if (lagPixelApi.testAPIConn())
-                                    Logger.Log_ln("Connection OK", Logger.Level.INFO, Logger.Type.SYSTEM);
-                                else
-                                    Logger.Log_ln("Connetion Failed", Logger.Level.CRIT, Logger.Type.SYSTEM);
-                                break;
-                            }
-                            case "closeapi": {
-                                lagPixelApi.closeConnectAPI();
-                                break;
-                            }
-                            case "playerlist": {
-                                Logger.Log_ln(lagPixelApi.getPlayerList(), Logger.Level.INFO, Logger.Type.SYSTEM);
-                                break;
-                            }
-                            case "connapi": {
-                                lagPixelApi.connectToAPI();
-                                break;
-                            }
-                            case "functest": {
-                                tests.testfunction();
-                                break;
-                            }
-                            case "debug": {
-                                if (Logger.getDebug()) {
-                                    Logger.Log_ln("Debug logging is now off", Logger.Level.INFO, Logger.Type.SYSTEM);
-                                    Logger.setDebug(false);
-                                } else {
-                                    Logger.Log_ln("Debug logging is now on", Logger.Level.INFO, Logger.Type.SYSTEM);
-                                    Logger.setDebug(true);
+                        Scanner scanner = new Scanner(System.in);
+                        try {
+                            arg = scanner.nextLine().trim().toLowerCase();
+                            switch (arg) {
+                                case "testconn": {
+                                    if (lagPixelApi.testAPIConn())
+                                        Logger.Log_ln("Connection OK", Logger.Level.INFO, Logger.Type.SYSTEM);
+                                    else
+                                        Logger.Log_ln("Connetion Failed", Logger.Level.CRIT, Logger.Type.SYSTEM);
+                                    break;
                                 }
-                                break;
-                            }
-                            case "dbpass": {
-                                String login;
-                                String password;
-                                System.out.print("Login: ");
-                                login = scanner.nextLine();
-                                System.out.print("Password: ");
-                                password = scanner.nextLine();
-                                if (sqlAPI.checkPassword(login, password)) {
-                                    Logger.Log_ln("Login and password is ok", Logger.Level.INFO, Logger.Type.SYSTEM);
-                                } else {
-                                    Logger.Log_ln("Incorrect login or password", Logger.Level.CRIT, Logger.Type.SYSTEM);
+                                case "closeapi": {
+                                    lagPixelApi.closeConnectAPI();
+                                    break;
+                                }
+                                case "playerlist": {
+                                    Logger.Log_ln(lagPixelApi.getPlayerList(), Logger.Level.INFO, Logger.Type.SYSTEM);
+                                    break;
+                                }
+                                case "connapi": {
+                                    lagPixelApi.connectToAPI();
+                                    break;
+                                }
+                                case "functest": {
+                                    tests.testfunction();
+                                    break;
+                                }
+                                case "debug": {
+                                    if (Logger.getDebug()) {
+                                        Logger.Log_ln("Debug logging is now off", Logger.Level.INFO, Logger.Type.SYSTEM);
+                                        Logger.setDebug(false);
+                                    } else {
+                                        Logger.Log_ln("Debug logging is now on", Logger.Level.INFO, Logger.Type.SYSTEM);
+                                        Logger.setDebug(true);
+                                    }
+                                    break;
+                                }
+                                case "dbpass": {
+                                    String login;
+                                    String password;
+                                    System.out.print("Login: ");
+                                    login = scanner.nextLine();
+                                    System.out.print("Password: ");
+                                    password = scanner.nextLine();
+                                    if (sqlAPI.checkPassword(login, password)) {
+                                        Logger.Log_ln("Login and password is ok", Logger.Level.INFO, Logger.Type.SYSTEM);
+                                    } else {
+                                        Logger.Log_ln("Incorrect login or password", Logger.Level.CRIT, Logger.Type.SYSTEM);
+                                    }
+                                }
+
+                                case "logout": {
+                                    Logger.Log_ln("Logging out...", Logger.Level.INFO, Logger.Type.SYSTEM);
+                                    consoleBoolean.set(false);
                                 }
                             }
+                            if (arg.equals("sqltest")) {
+                                String status;
+                                if (sqlAPI.checkDBConn()) {
+                                    status = Color.Green + "OK" + Color.Reset;
+                                    boolean isOk = sqlAPI.checkPassword("admin", "admin");
+                                    Logger.Log_ln("SQL check password for admin: " + isOk, Logger.Level.INFO, Logger.Type.SYSTEM);
 
-                            case "logout": {
-                                Logger.Log_ln("Logging out...", Logger.Level.INFO, Logger.Type.SYSTEM);
-                                consoleBoolean.set(false);
+                                } else {
+                                    status = Color.Red + "ERROR" + Color.Reset;
+                                }
+                                Logger.Log_ln("SQL Status: " + status, Logger.Level.INFO, Logger.Type.SYSTEM);
                             }
-                        }
-                        if (arg.equals("sqltest")) {
-                            String status;
-                            if (sqlAPI.checkDBConn()) {
-                                status = Color.Green + "OK" + Color.Reset;
-                                boolean isOk = sqlAPI.checkPassword("admin", "admin");
-                                Logger.Log_ln("SQL check password for admin: " + isOk, Logger.Level.INFO, Logger.Type.SYSTEM);
-
-                            } else {
-                                status = Color.Red + "ERROR" + Color.Reset;
-                            }
-                            Logger.Log_ln("SQL Status: " + status, Logger.Level.INFO, Logger.Type.SYSTEM);
+                        }catch (Exception ignored){
                         }
                     }
                 }

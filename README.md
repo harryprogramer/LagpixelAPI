@@ -45,6 +45,7 @@ Code:
 - 15 - whitelist bool | body: none | status, body: whitelistbool
 - 16 - whitelist list | body: none | status, body: list <array>
 - 17 - whitelist player check | body: player | body: bool
+- 18 - check conn | body: none | body: none
 
 ---------------------------------
 #### **Example Request**

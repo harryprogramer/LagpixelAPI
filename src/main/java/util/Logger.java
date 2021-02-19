@@ -9,6 +9,9 @@ import org.apache.log4j.PropertyConfigurator;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 @SuppressWarnings("unused")
@@ -30,11 +33,6 @@ public class Logger {
 
     public static void setDebug(boolean debugbool){
         debug = debugbool;
-        if(!(debug)) {
-            org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.DEBUG);
-        }else{
-            org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.DEBUG);
-        }
     }
 
     public static boolean getDebug(){
@@ -56,13 +54,19 @@ public class Logger {
     }
 
         public static void InitLog(){
+        File logDirectory = new File("./log/");
+        if(!(logDirectory.isDirectory())){
+            try {
+                Files.createDirectories(Paths.get("./log/"));
+            } catch (IOException ignored) { }
+        }
             PatternLayout layout = new PatternLayout();
             String conversionPattern = "[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%-5p] %t: - %m%n";
             layout.setConversionPattern(conversionPattern);
 
             // creates daily rolling file appender
             DailyRollingFileAppender rollingAppender = new DailyRollingFileAppender();
-            rollingAppender.setFile(GetTime.getTimeString(GetTime.TimeFormat.YEARS, GetTime.TimeFormat.MONTHS,
+            rollingAppender.setFile("./log/" + GetTime.getTimeString(GetTime.TimeFormat.YEARS, GetTime.TimeFormat.MONTHS,
                     GetTime.TimeFormat.DAYS, GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES, GetTime.TimeFormat.SECONDS) + ".log");
             rollingAppender.setDatePattern("'.'yyyy-MM-dd");
             rollingAppender.setLayout(layout);
