@@ -67,7 +67,11 @@ public class Main {
     }
 
     public synchronized void consoleRun() throws InterruptedException {
-        console.start();
+        try {
+            console.start();
+        }catch (Exception e){
+            Logger.createDumpCore(e);
+        }
     }
 
 }

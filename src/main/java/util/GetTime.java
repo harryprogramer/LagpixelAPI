@@ -41,19 +41,19 @@ public class GetTime {
                     dateformatter.append(" | ");
                     break;
                 case YEARS:
-                    dateformatter.append("yyyy");
+                    dateformatter.append("yyyy ");
                     break;
                 case MONTHS:
-                    dateformatter.append("MM");
+                    dateformatter.append("MM ");
                     break;
                 case DAYS:
-                    dateformatter.append("dd");
+                    dateformatter.append("dd ");
                     break;
                 case HOURS:
-                    dateformatter.append("HH:");
+                    dateformatter.append("HH.");
                     break;
                 case MINUTES:
-                    dateformatter.append("mm:");
+                    dateformatter.append("mm.");
                     break;
                 case SECONDS:
                     dateformatter.append("ss");

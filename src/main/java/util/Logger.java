@@ -1,15 +1,19 @@
 package util;
 
+import com.Main;
+import com.Server;
+import org.apache.log4j.DailyRollingFileAppender;
 import org.apache.log4j.Level;
+import org.apache.log4j.PatternLayout;
 import org.apache.log4j.PropertyConfigurator;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.io.*;
 import java.util.Properties;
 
 @SuppressWarnings("unused")
 public class Logger {
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Logger.class.getName());
+    static org.apache.log4j.Logger log;
     /*
     * Colors:
     * [INFO] - green
@@ -52,15 +56,25 @@ public class Logger {
     }
 
         public static void InitLog(){
-            //Properties log4jproperty = new Properties();
-            //log4jproperty.setProperty("log4j.rootLogger", "INFO, file");
-            //log4jproperty.setProperty("log4j.appender.file", "org.apache.log4j.RollingFileAppender");
-            //log4jproperty.setProperty("log4j.appender.file.DatePattern","yyyy-MM-dd-HH-mm'.log");
-            //log4jproperty.setProperty("log4j.appender.file.MaxFileSize", "10000MB");
-            //log4jproperty.setProperty("log4j.appender.file.MaxBackupIndex", "10");
-            //log4jproperty.setProperty("log4j.appender.file.layout", "org.apache.log4j.PatternLayout");
-            //log4jproperty.setProperty("log4j.appender.file.layout.ConversionPattern", "[%t] %-5p %c %x - %m%n");
-            PropertyConfigurator.configure("log4j.properties");
+            PatternLayout layout = new PatternLayout();
+            String conversionPattern = "[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%-5p] %t: - %m%n";
+            layout.setConversionPattern(conversionPattern);
+
+            // creates daily rolling file appender
+            DailyRollingFileAppender rollingAppender = new DailyRollingFileAppender();
+            rollingAppender.setFile(GetTime.getTimeString(GetTime.TimeFormat.YEARS, GetTime.TimeFormat.MONTHS,
+                    GetTime.TimeFormat.DAYS, GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES, GetTime.TimeFormat.SECONDS) + ".log");
+            rollingAppender.setDatePattern("'.'yyyy-MM-dd");
+            rollingAppender.setLayout(layout);
+            rollingAppender.activateOptions();
+
+            // configures the root logger
+            org.apache.log4j.Logger rootLogger = org.apache.log4j.Logger.getRootLogger();
+            rootLogger.setLevel(org.apache.log4j.Level.DEBUG);
+            rootLogger.addAppender(rollingAppender);
+
+            // creates a custom logger and log messages
+            log = org.apache.log4j.Logger.getLogger(Logger.class.getName());
         }
 
         private static String LogFormat(@NotNull String msg, @NotNull Level level, @NotNull Type type){
@@ -138,6 +152,37 @@ public class Logger {
         }else{
             System.out.print(logmessage);
         }
+    }
+
+    public static void createDumpCore(Exception e){
+        FileWriter dumpWriter;
+        String filename = GetTime.getTimeString(GetTime.TimeFormat.YEARS,
+                GetTime.TimeFormat.MONTHS, GetTime.TimeFormat.DAYS,
+                GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES,
+                GetTime.TimeFormat.SECONDS) + "dump.txt";
+        StringWriter sw;
+        PrintWriter pw;
+        try {
+            File myObj = new File(filename);
+            if (myObj.createNewFile()) {
+                dumpWriter = new FileWriter(myObj);
+                sw = new StringWriter();
+                pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                dumpWriter.write("Program start at: " + Server.startTime);
+                dumpWriter.write("Date: " + GetTime.getTimeString(GetTime.TimeFormat.YEARS, GetTime.TimeFormat.MONTHS, GetTime.TimeFormat.DAYS, GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES, GetTime.TimeFormat.SECONDS, GetTime.TimeFormat.MILISECONDS ));
+                dumpWriter.write("System properties: " + System.getProperties().toString());
+                dumpWriter.write("Exception message: " + e.getMessage());
+                dumpWriter.write("Cause message" + e.getCause().getMessage());
+                dumpWriter.write("Stack Trace: " + sw.toString());
+            }
+        } catch (IOException ioException) {
+            Logger.Log_ln("Failed to create Dump Core " + ioException.getMessage(), Level.CRIT, Type.SYSTEM);
+            e.printStackTrace();
+        }
+
+        System.exit(-1);
+
     }
 
 
