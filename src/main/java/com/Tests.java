@@ -42,7 +42,7 @@ public class Tests {
 
             // Kicking player test
             Logger.Log_ln("Testing kick, target player: " + testPlayer, Logger.Level.INFO, Logger.Type.SYSTEM);
-            testsJSON = new JSONObject(lagpixelAPI.kickPlayer(testPlayer, "test kick"));
+            testsJSON = new JSONObject(lagpixelAPI.kickPlayer(testPlayer, "test kick", "test"));
             if (testsJSON.getString("status").equalsIgnoreCase("ok")) {
                 Logger.Log_ln("Kick Players, OK", Logger.Level.INFO, Logger.Type.SYSTEM);
                 booleantest[2] = true;

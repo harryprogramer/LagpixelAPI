@@ -4,9 +4,9 @@ import org.json.JSONObject;
 
 class KickPlayer {
     static SocketCore getServer = SocketCore.getServer();
-    public static String kick(String player, String kickReason){
+    public static String kick(String targetPlayer, String kickReason, String fromUser){
         JSONObject responseJSON;
-        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("7", new JSONObject().put("player", player).put("reason", kickReason)));
+        String message = getServer.sendMessage(ResponseJSON.SendQuestionToPaper("7", new JSONObject().put("player", targetPlayer).put("reason", kickReason).put("user", fromUser)));
         try{
             responseJSON = new JSONObject(message);
         }catch (Exception e){

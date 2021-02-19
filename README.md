@@ -35,7 +35,7 @@ Code:
 - 2 - try on
 - 5 - get player list | body: none | status, body: players: jsonarray
 - 6 - ban | body: player, reason, expires, user | status, body: none
-- 7 - kick | body: player, message | status, body: none
+- 7 - kick | body: player, message, user | status, body: none
 - 8 - tps | body: none | status, body: tps
 - 9 - whitelist on | body: none | status, body: status, 
 - 10 - whitelist off | body: none | status, body: status, 

@@ -51,14 +51,15 @@ public class Parser {
                 return lagpixelAPI.banPlayer(player, reason, expires);
             }
             case 7: {
-                String player, message;
+                String player, message, fromUser;
                 try{
                     player = bodyJSON.getString("player");
                     message = bodyJSON.getString("message");
+                    fromUser = bodyJSON.getString("user");
                 }catch (Exception e){
                     return ResponseJSON.ERRORResponseToClientAPI("9", "invalid player or message body key [" + e + "]", "parser");
                 }
-                return lagpixelAPI.kickPlayer(player, message);
+                return lagpixelAPI.kickPlayer(player, message, fromUser);
             }
 
             case 8: {

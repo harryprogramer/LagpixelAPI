@@ -78,8 +78,8 @@ class LagpixelAPI08Impl implements LagpixelAPI {
     }
 
     @Override
-    public String kickPlayer(@NotNull String player, @Nullable String message) {
-        return KickPlayer.kick(player, message);
+    public String kickPlayer(@NotNull String player, @Nullable String message, @NotNull String fromUser) {
+        return KickPlayer.kick(player, message, fromUser);
     }
 
     @Override

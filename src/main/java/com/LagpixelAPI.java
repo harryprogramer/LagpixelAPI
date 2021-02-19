@@ -10,7 +10,7 @@ public interface LagpixelAPI {
 
     String banPlayer(@NotNull String player, @Nullable String reason, String expires);
 
-    String kickPlayer(@NotNull String player, @Nullable String message);
+    String kickPlayer(@NotNull String player, @Nullable String message, @NotNull String fromUser);
 
     String whitelistON();
 
