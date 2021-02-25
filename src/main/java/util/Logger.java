@@ -174,7 +174,9 @@ public class Logger {
                 pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
                 dumpWriter.write("Program start at: " + Server.startTime);
-                dumpWriter.write("Date: " + GetTime.getTimeString(GetTime.TimeFormat.YEARS, GetTime.TimeFormat.MONTHS, GetTime.TimeFormat.DAYS, GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES, GetTime.TimeFormat.SECONDS, GetTime.TimeFormat.MILISECONDS ));
+                dumpWriter.write("Date: " + GetTime.getTimeString(GetTime.TimeFormat.YEARS, GetTime.TimeFormat.MONTHS,
+                        GetTime.TimeFormat.DAYS, GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES,
+                        GetTime.TimeFormat.SECONDS, GetTime.TimeFormat.MILISECONDS ));
                 dumpWriter.write("System properties: " + System.getProperties().toString());
                 dumpWriter.write("Exception message: " + e.getMessage());
                 dumpWriter.write("Cause message" + e.getCause().getMessage());
