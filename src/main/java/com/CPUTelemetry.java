@@ -3,6 +3,8 @@ package com;
 import com.api.sensors.SystemInfo;
 import com.api.sensors.SystemInfoAPI;
 
+import java.time.LocalDateTime;
+
 @SuppressWarnings("unused")
 public class CPUTelemetry{
     private final Thread measureThread;
@@ -11,6 +13,7 @@ public class CPUTelemetry{
     private boolean dailyMeasureBool;
     private int temp = 0;
     private volatile double[] tempDay;
+    LocalDateTime startTime;
     Thread tempDayMeasureThread;
     SystemInfo systemAPI = SystemInfoAPI.getAPI();
 
@@ -23,6 +26,7 @@ public class CPUTelemetry{
                         if (tempDay == null) {
                             tempDay = new double[100];
                         }
+                        startTime = LocalDateTime.now();
                         for(int i = 0; i < tempDay.length;) {
                             tempDay[i] = getTemp();
                             try {
@@ -106,5 +110,6 @@ public class CPUTelemetry{
     public synchronized int getTemp(){
         return temp;
     }
+    public synchronized String measureStartTime(){return startTime.toString();}
 
 }
