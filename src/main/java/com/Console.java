@@ -7,6 +7,7 @@ import com.sql.SQL;
 import util.Color;
 import util.Logger;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -16,6 +17,7 @@ public class Console extends Thread{
     final API sqlAPI = SQL.getInstance();
     final Tests tests = new Tests();
     final Scanner authorizationInput = new Scanner(System.in);
+    CPUTelemetry cpuTelemetry = CPUTelemetry.getInstance();
     AtomicBoolean consoleBoolean = new AtomicBoolean(true);
 
     @Override
@@ -112,6 +114,14 @@ public class Console extends Thread{
                                 case "logout": {
                                     Logger.Log_ln("Logging out...", Logger.Level.INFO, Logger.Type.SYSTEM);
                                     consoleBoolean.set(false);
+                                }
+
+                                case "cputemp": {
+                                    Logger.Log_ln(Integer.toString(cpuTelemetry.getTemp()), Logger.Level.INFO, Logger.Type.SYSTEM);
+                                }
+
+                                case "dailytemp": {
+                                    Logger.Log_ln(Arrays.toString(cpuTelemetry.getDayTemp()), Logger.Level.INFO, Logger.Type.SYSTEM);
                                 }
                             }
                             if (arg.equals("sqltest")) {

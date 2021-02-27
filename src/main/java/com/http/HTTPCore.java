@@ -25,7 +25,7 @@ public class HTTPCore {
     }
 
     @PostMapping(path = "/api", produces= MediaType.APPLICATION_JSON_VALUE)
-    public String api(@RequestParam(value = "name", defaultValue = "World") String name, HttpEntity<String> httpEntity, HttpServletRequest request) {
+    public String api(String name, HttpEntity<String> httpEntity, HttpServletRequest request) {
         JSONObject recvJSON;
         String json = httpEntity.getBody();
         if(json == null){

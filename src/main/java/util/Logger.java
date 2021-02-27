@@ -159,7 +159,7 @@ public class Logger {
     }
 
     public static void createDumpCore(Exception e){
-        FileWriter dumpWriter;
+        FileWriter dumpWriter = null;
         String filename = GetTime.getTimeString(GetTime.TimeFormat.YEARS,
                 GetTime.TimeFormat.MONTHS, GetTime.TimeFormat.DAYS,
                 GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES,
@@ -173,18 +173,26 @@ public class Logger {
                 sw = new StringWriter();
                 pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
-                dumpWriter.write("Program start at: " + Server.startTime);
+                dumpWriter.write("Program start at: " + Server.startTime + "\n");
                 dumpWriter.write("Date: " + GetTime.getTimeString(GetTime.TimeFormat.YEARS, GetTime.TimeFormat.MONTHS,
                         GetTime.TimeFormat.DAYS, GetTime.TimeFormat.HOURS, GetTime.TimeFormat.MINUTES,
-                        GetTime.TimeFormat.SECONDS, GetTime.TimeFormat.MILISECONDS ));
-                dumpWriter.write("System properties: " + System.getProperties().toString());
-                dumpWriter.write("Exception message: " + e.getMessage());
-                dumpWriter.write("Cause message" + e.getCause().getMessage());
-                dumpWriter.write("Stack Trace: " + sw.toString());
+                        GetTime.TimeFormat.SECONDS, GetTime.TimeFormat.MILISECONDS ) + "\n");
+                dumpWriter.write("Exception message: " + e.getMessage() + "\n");
+                dumpWriter.write("Stack Trace: " + sw.toString() + "\n");
+                dumpWriter.write("System properties: " + System.getProperties().toString() + "\n");
             }
         } catch (IOException ioException) {
             Logger.Log_ln("Failed to create Dump Core " + ioException.getMessage(), Level.CRIT, Type.SYSTEM);
             e.printStackTrace();
+        }
+        finally {
+            if(dumpWriter != null) {
+                try {
+                    dumpWriter.close();
+                } catch (IOException ioException) {
+                    Logger.Log_ln(ioException.toString(), Level.CRIT, Type.SYSTEM);
+                }
+            }
         }
 
         System.exit(-1);

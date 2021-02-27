@@ -17,10 +17,14 @@ C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\Whitelist.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\sql\API.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\GetTPS.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\PlayerList.java
+C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\sensors\SystemInfo.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\Broadcast.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\LagpixelAPI.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\util\Color.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\util\GetTime.java
+C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\sensors\SystemInfoImpl.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\ResponseJSON.java
+C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\CPUTelemetry.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\util\Logger.java
 C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\LagpixelAPI08Impl.java
+C:\Users\szymo\IdeaProjects\LagpixelAPI\src\main\java\com\api\sensors\SystemInfoAPI.java

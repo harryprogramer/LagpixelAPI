@@ -92,8 +92,13 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>LATEST</version>
+            <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.profesorfalken</groupId>
+            <artifactId>jSensors</artifactId>
+            <version>2.2.1</version>
         </dependency>
     </dependencies>
 </project>

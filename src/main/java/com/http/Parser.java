@@ -1,10 +1,14 @@
 package com.http;
 
+import com.CPUTelemetry;
 import com.LagpixelAPI;
 import com.api.LagpixelAPI08;
 import com.api.ResponseJSON;
+import com.api.sensors.SystemInfo;
+import com.api.sensors.SystemInfoAPI;
 import com.sql.API;
 import com.sql.SQL;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class Parser {
     static LagpixelAPI lagpixelAPI = LagpixelAPI08.getInstance();
     static API sqlapi = SQL.getInstance();
+    static SystemInfo systemInfo = SystemInfoAPI.getAPI();
     protected static String idParser(JSONObject jsonObject){
         String login, password;
         try{
@@ -29,7 +34,7 @@ public class Parser {
         int id;
 
         try {
-            id = Integer.parseInt(jsonObject.getString("code"));
+            id = Integer.parseInt(jsonObject.getString("id"));
             bodyJSON = jsonObject.getJSONObject("body");
         }catch (Exception e){
             return ResponseJSON.ERRORResponseToClientAPI("8", "invalid id code or body object [" + e.getMessage() + "]", "parser");
@@ -125,6 +130,19 @@ public class Parser {
 
             case 18: {
                 return ResponseJSON.OKResponseToClient(null);
+            }
+
+            case 19: {
+                return ResponseJSON.OKResponseToClient(new JSONObject().put("value", CPUTelemetry.getInstance().getTemp()));
+            }
+
+            case 20: {
+                double[] temp = CPUTelemetry.getInstance().getDayTemp();
+                JSONArray temparray = new JSONArray();
+                for(double temps : temp){
+                    temparray.put(temps);
+                }
+                return ResponseJSON.OKResponseToClient(new JSONObject().put("value", temparray));
             }
 
             default:
