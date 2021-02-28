@@ -1,3 +1,5 @@
+# PROTOCOL 0.9 SENSORS UPDATE
+
 **Zmieniono składnie jsona:**
 - od teraz 'code' został zamieniony na 'id'
 
@@ -17,3 +19,12 @@
 **Inne:**
 - zmieniono nazwe z LagpixelAPI na LWLAPI_08
 - ta aktualizacja przygotuje api do wersji 1.0
+
+---
+
+# PROTOCOL 0.9.2 patch 
+
+**Naprawiono:**
+- nie czyszczący sie bufor podczas zbierania danych telemetrycznych z calego dnia
+- naprawiono petle loop zbierająca dane telemtryczne nie zawierająca zwiekszania zmiennej i++;
+- naprawiono nie aktualizujące się dane o procesorze  
