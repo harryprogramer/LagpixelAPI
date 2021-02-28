@@ -25,7 +25,13 @@ public class Main {
 
     private void InitObject(){
         Logger.setDebug(false);
-
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            @Override
+            public void run() {
+                Logger.Log_ln("Shutting down...", Logger.Level.INFO, Logger.Type.SYSTEM);
+                lagPixelApi.closeConnectAPI();
+            }
+        });
         serversthread = new Thread(){
             synchronized void runHTTP(){
                 Logger.Log_ln("Starting HTTP...", Logger.Level.INFO, Logger.Type.HTTP);
@@ -41,10 +47,26 @@ public class Main {
                 lagPixelApi.connectToAPI();
             }
 
+            synchronized void runTempTelemetry(){
+                Logger.Log_ln("Starting system telemtry", Logger.Level.INFO, Logger.Type.SYSTEM);
+                cpuTelemetry.startMeasure(CPUTelemetry.TYPE.ALL);
+                try {
+                    this.wait(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(cpuTelemetry.getTemp() != 0) {
+                    Logger.Log_ln("Telemetry OK", Logger.Level.INFO, Logger.Type.SYSTEM);
+                }else{
+                    Logger.Log_ln("Telemetry Failed", Logger.Level.INFO, Logger.Type.SYSTEM);
+                }
+            }
+
             @Override
             public void run() {
                 runHTTP();
                 runAPISocket();
+                runTempTelemetry();
                 Logger.Log_ln("Done!, in " + ChronoUnit.MILLIS.between(Server.startTime, LocalDateTime.now()) / 1000.0 + " s", Logger.Level.INFO, Logger.Type.SYSTEM);
                 consoleRun();
             }
@@ -73,7 +95,7 @@ public class Main {
         sqlAPI.setDBUrl("jdbc:sqlserver://192.168.0.14;database=API;user=sa;password=LagpixelDB1234;");
         Logger.Log_ln("Loading sensors...", Logger.Level.INFO, Logger.Type.SYSTEM);
         systemapi.loadSensors();
-        cpuTelemetry.startMeasure(CPUTelemetry.TYPE.ALL);
+        Logger.Log_ln("Done, detected e.g processor: " + systemapi.getCPUName(), Logger.Level.INFO, Logger.Type.SYSTEM);
         serversthread.start();
         }
 

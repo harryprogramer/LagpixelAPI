@@ -2,6 +2,7 @@ package com;
 
 import com.api.sensors.SystemInfo;
 import com.api.sensors.SystemInfoAPI;
+import util.Logger;
 
 import java.time.LocalDateTime;
 
@@ -27,14 +28,16 @@ public class CPUTelemetry{
                             tempDay = new double[100];
                         }
                         startTime = LocalDateTime.now();
-                        for(int i = 0; i < tempDay.length;) {
+                        for(int i = 0; i < tempDay.length; i++) {
+                            Logger.Log_ln("CPU temp day api value update, buffor index: " + i, Logger.Level.DEBUG, Logger.Type.SYSTEM);
                             tempDay[i] = getTemp();
                             try {
-                                this.wait(900);
+                                this.wait(900000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
+                        Logger.Log_ln("Temp cpu Buffor full, clearing...", Logger.Level.INFO, Logger.Type.SYSTEM);
                         tempDay = new double[100];
                     }
                 }
@@ -46,9 +49,10 @@ public class CPUTelemetry{
             public void run() {
                 synchronized (this) {
                     while (measureBoolean) {
+                        Logger.Log_ln("CPU temp api value update", Logger.Level.DEBUG, Logger.Type.SYSTEM);
                         temp = systemAPI.getCPUTemp();
                         try {
-                            this.wait(60);
+                            this.wait(60000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -108,6 +112,7 @@ public class CPUTelemetry{
     }
 
     public synchronized int getTemp(){
+        Logger.Log_ln("Kernel api call getTemp(), returned temp: " + temp, Logger.Level.INFO, Logger.Type.SYSTEM);
         return temp;
     }
     public synchronized String measureStartTime(){return startTime.toString();}

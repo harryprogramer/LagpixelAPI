@@ -36,7 +36,7 @@ public class HTTPCore {
         }catch (Exception ignored){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "json structure not valid");
         }
-        Logger.Log_ln("Request from " + request.getRemoteHost(), Logger.Level.DEBUG, Logger.Type.HTTP);
+        Logger.Log_ln("Request from " + request.getRemoteHost(), Logger.Level.INFO, Logger.Type.HTTP);
         return Parser.idParser(recvJSON);
     }
 }

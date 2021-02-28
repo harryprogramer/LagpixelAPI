@@ -42,7 +42,9 @@ class LagpixelAPI08Impl implements LagpixelAPI {
 
     @Override
     public void closeConnectAPI() {
-        socketCore.closeConn();
+        if(socketCore != null) {
+            socketCore.closeConn();
+        }
     }
 
     @Override
