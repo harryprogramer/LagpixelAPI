@@ -7,18 +7,20 @@ import util.Logger;
 import java.time.LocalDateTime;
 
 @SuppressWarnings("unused")
-public class CPUTelemetry{
+public class Telemetry {
     private final Thread measureThread;
-    private static CPUTelemetry instance;
+    private final Thread tempDayMeasureThread;
+    private static Telemetry instance;
     private boolean measureBoolean;
     private boolean dailyMeasureBool;
+    private boolean networkTelemetry;
     private int temp = 0;
     private volatile double[] tempDay;
-    LocalDateTime startTime;
-    Thread tempDayMeasureThread;
+    LocalDateTime buffFirstIndexTime;
+    LocalDateTime lastTempUpdate;
     SystemInfo systemAPI = SystemInfoAPI.getAPI();
 
-    private CPUTelemetry() {
+    private Telemetry() {
         tempDayMeasureThread = new Thread() {
             @Override
             public void run() {
@@ -27,7 +29,7 @@ public class CPUTelemetry{
                         if (tempDay == null) {
                             tempDay = new double[100];
                         }
-                        startTime = LocalDateTime.now();
+                        buffFirstIndexTime = LocalDateTime.now();
                         for(int i = 0; i < tempDay.length; i++) {
                             Logger.Log_ln("CPU temp day api value update, buffor index: " + i, Logger.Level.DEBUG, Logger.Type.SYSTEM);
                             tempDay[i] = getTemp();
@@ -50,6 +52,7 @@ public class CPUTelemetry{
                 synchronized (this) {
                     while (measureBoolean) {
                         Logger.Log_ln("CPU temp api value update", Logger.Level.DEBUG, Logger.Type.SYSTEM);
+                        lastTempUpdate = LocalDateTime.now();
                         temp = systemAPI.getCPUTemp();
                         try {
                             this.wait(60000);
@@ -63,25 +66,25 @@ public class CPUTelemetry{
     }
 
     public enum TYPE{
-        CURRENT,
-        DAILY,
+        TEMPTELEMETRY,
+        TEMPBUFFTELEMETRY,
         ALL
     }
 
-    public synchronized static CPUTelemetry getInstance(){
+    public synchronized static Telemetry getInstance(){
         if(instance == null){
-            instance = new CPUTelemetry();
+            instance = new Telemetry();
         }
         return instance;
     }
 
     public synchronized void startMeasure(TYPE type){
         switch (type){
-            case CURRENT:
+            case TEMPTELEMETRY:
                 measureBoolean = true;
                 measureThread.start();
                 break;
-            case DAILY:
+            case TEMPBUFFTELEMETRY:
                 dailyMeasureBool = true;
                 tempDayMeasureThread.start();
                 break;
@@ -90,6 +93,7 @@ public class CPUTelemetry{
                 measureThread.start();
                 dailyMeasureBool = true;
                 tempDayMeasureThread.start();
+                break;
         }
     }
 
@@ -99,10 +103,10 @@ public class CPUTelemetry{
 
     public synchronized void stopMeasure(TYPE type){
         switch (type){
-            case CURRENT:
+            case TEMPTELEMETRY:
                 measureBoolean = false;
                 break;
-            case DAILY:
+            case TEMPBUFFTELEMETRY:
                 dailyMeasureBool = false;
                 break;
             case ALL:
@@ -112,9 +116,18 @@ public class CPUTelemetry{
     }
 
     public synchronized int getTemp(){
-        Logger.Log_ln("Kernel api call getTemp(), returned temp: " + temp, Logger.Level.INFO, Logger.Type.SYSTEM);
         return temp;
     }
-    public synchronized String measureStartTime(){return startTime.toString();}
+    
+    public synchronized String measureStartTime(){return buffFirstIndexTime.toString();}
+    
+    
+    public LocalDateTime getBuffTempFirstIndexTime(){
+        return buffFirstIndexTime;
+    }
+    
+    public LocalDateTime getLastTempUpdate(){
+        return lastTempUpdate;
+    }
 
 }

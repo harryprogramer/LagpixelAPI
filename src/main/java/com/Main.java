@@ -20,18 +20,16 @@ public class Main {
     SpringApplication application;
     Thread serversthread;
     SystemInfo systemapi;
-    CPUTelemetry cpuTelemetry;
+    Telemetry telemetry;
 
 
     private void InitObject(){
         Logger.setDebug(false);
-        Runtime.getRuntime().addShutdownHook(new Thread(){
-            @Override
-            public void run() {
-                Logger.Log_ln("Shutting down...", Logger.Level.INFO, Logger.Type.SYSTEM);
-                lagPixelApi.closeConnectAPI();
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Logger.Log_ln("Shutting down...", Logger.Level.INFO, Logger.Type.SYSTEM);
+            lagPixelApi.closeConnectAPI();
+            application = null;
+        }));
         serversthread = new Thread(){
             synchronized void runHTTP(){
                 Logger.Log_ln("Starting HTTP...", Logger.Level.INFO, Logger.Type.HTTP);
@@ -48,14 +46,14 @@ public class Main {
             }
 
             synchronized void runTempTelemetry(){
-                Logger.Log_ln("Starting system telemtry", Logger.Level.INFO, Logger.Type.SYSTEM);
-                cpuTelemetry.startMeasure(CPUTelemetry.TYPE.ALL);
+                Logger.Log_ln("Starting system telemetry", Logger.Level.INFO, Logger.Type.SYSTEM);
+                telemetry.startMeasure(Telemetry.TYPE.ALL);
                 try {
                     this.wait(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(cpuTelemetry.getTemp() != 0) {
+                if(telemetry.getTemp() != 0) {
                     Logger.Log_ln("Telemetry OK", Logger.Level.INFO, Logger.Type.SYSTEM);
                 }else{
                     Logger.Log_ln("Telemetry Failed", Logger.Level.INFO, Logger.Type.SYSTEM);
@@ -77,7 +75,7 @@ public class Main {
         sqlAPI = SQL.getInstance();
         lagPixelApi.setPort(2800);
         lagPixelApi.setInetAddress("localhost");
-        cpuTelemetry = CPUTelemetry.getInstance();
+        telemetry = Telemetry.getInstance();
         application = new SpringApplication(HTTPCore.class);
         Properties properties = new Properties();
         properties.setProperty("spring.main.banner-mode", "off");

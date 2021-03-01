@@ -95,6 +95,12 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/fr.bmartel/jspeedtest -->
+        <dependency>
+            <groupId>fr.bmartel</groupId>
+            <artifactId>jspeedtest</artifactId>
+            <version>1.30.1</version>
+        </dependency>
         <dependency>
             <groupId>com.profesorfalken</groupId>
             <artifactId>jSensors</artifactId>

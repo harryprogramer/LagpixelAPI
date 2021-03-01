@@ -46,8 +46,7 @@ Code:
 - 16 - whitelist list | body: none | status, body: list <array>
 - 17 - whitelist player check | body: player | body: bool
 - 18 - check conn | body: none | body: none
-- 19 - check cpu temp | body: temp array, start measure time | body: none
-- 20 - get temp array daily | body: array daily  | body: none
+- 19 - get system data | body: none | body: data{ memory{total, free, using}, cpu{tempcpubuff, tempcpu, measure_time: []}} 
 
 ---------------------------------
 #### **Example Request**

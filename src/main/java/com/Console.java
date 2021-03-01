@@ -2,6 +2,8 @@ package com;
 
 
 import com.api.LagpixelAPI08;
+import com.api.sensors.SystemInfo;
+import com.api.sensors.SystemInfoAPI;
 import com.sql.API;
 import com.sql.SQL;
 import util.Color;
@@ -17,7 +19,8 @@ public class Console extends Thread{
     final API sqlAPI = SQL.getInstance();
     final Tests tests = new Tests();
     final Scanner authorizationInput = new Scanner(System.in);
-    CPUTelemetry cpuTelemetry = CPUTelemetry.getInstance();
+    SystemInfo systemInfo = SystemInfoAPI.getAPI();
+    Telemetry telemetry = Telemetry.getInstance();
     AtomicBoolean consoleBoolean = new AtomicBoolean(true);
 
     @Override
@@ -63,6 +66,7 @@ public class Console extends Thread{
                         Scanner scanner = new Scanner(System.in);
                         try {
                             arg = scanner.nextLine().trim().toLowerCase();
+                            Logger.Log_ln("Used command: " + arg, Logger.Level.DEBUG, Logger.Type.SYSTEM);
                             switch (arg) {
                                 case "testconn": {
                                     if (lagPixelApi.testAPIConn())
@@ -117,11 +121,20 @@ public class Console extends Thread{
                                 }
 
                                 case "cputemp": {
-                                    Logger.Log_ln(Integer.toString(cpuTelemetry.getTemp()), Logger.Level.INFO, Logger.Type.SYSTEM);
+                                    Logger.Log_ln(Integer.toString(telemetry.getTemp()), Logger.Level.INFO, Logger.Type.SYSTEM);
                                 }
 
                                 case "dailytemp": {
-                                    Logger.Log_ln(Arrays.toString(cpuTelemetry.getDayTemp()), Logger.Level.INFO, Logger.Type.SYSTEM);
+                                    Logger.Log_ln(Arrays.toString(telemetry.getDayTemp()), Logger.Level.INFO, Logger.Type.SYSTEM);
+                                }
+
+                                case "cpu": {
+                                }
+
+                                case "speed": {
+                                    Logger.Log_ln("Executing...", Logger.Level.INFO, Logger.Type.SYSTEM);
+                                    double ping = systemInfo.getInternetPing();
+                                    Logger.Log_ln("Final return: " + ping, Logger.Level.INFO, Logger.Type.SYSTEM);
                                 }
                             }
                             if (arg.equals("sqltest")) {

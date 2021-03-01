@@ -13,6 +13,8 @@
       <w>serversthread</w>
       <w>sethost</w>
       <w>setport</w>
+      <w>tempbufftelemetry</w>
+      <w>temptelemetry</w>
       <w>typestring</w>
     </words>
   </dictionary>

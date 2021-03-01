@@ -56,7 +56,7 @@ class SocketCore {
     }
 
 
-    protected String sendMessage(String message){
+    protected synchronized String sendMessage(String message){
         if(!(Objects.isNull(socket))) {
             try {
                 Logger.Log_ln("Processing request", Logger.Level.DEBUG, Logger.Type.SYSTEM);
@@ -153,7 +153,7 @@ class SocketCore {
         }
 
 
-    protected void closeConn(){
+    protected synchronized void closeConn(){
         if(!(socket.isClosed())){
             try {
                 socket.close();

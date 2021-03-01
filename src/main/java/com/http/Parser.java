@@ -1,6 +1,6 @@
 package com.http;
 
-import com.CPUTelemetry;
+import com.Telemetry;
 import com.LagpixelAPI;
 import com.api.LagpixelAPI08;
 import com.api.ResponseJSON;
@@ -37,7 +37,7 @@ public class Parser {
             id = Integer.parseInt(jsonObject.getString("id"));
             bodyJSON = jsonObject.getJSONObject("body");
         }catch (Exception e){
-            return ResponseJSON.ERRORResponseToClientAPI("8", "invalid id code or body object [" + e.getMessage() + "]", "parser");
+            return ResponseJSON.ERRORResponseToClientAPI("8", "invalid id packet [" + e.getMessage() + "]", "parser");
         }
 
         switch (id){
@@ -133,20 +133,31 @@ public class Parser {
             }
 
             case 19: {
-                return ResponseJSON.OKResponseToClient(new JSONObject().put("value", CPUTelemetry.getInstance().getTemp()));
-            }
-
-            case 20: {
-                double[] temp = CPUTelemetry.getInstance().getDayTemp();
+                JSONObject responseJSON = new JSONObject();
+                JSONObject cpuobject = new JSONObject();
+                JSONObject memoryobject = new JSONObject();
                 JSONArray temparray = new JSONArray();
+                double[] temp = Telemetry.getInstance().getDayTemp();
                 for(double temps : temp){
                     temparray.put(temps);
                 }
-                return ResponseJSON.OKResponseToClient(new JSONObject().put("value", temparray));
-            }
+                // obiekt odpowiedzi
+                responseJSON.put("cpu", cpuobject);
+                responseJSON.put("memory", memoryobject);
+                // obiekt cpu
+                cpuobject.put("bufftemp", temparray);
+                cpuobject.put("temp", Telemetry.getInstance().getTemp());
+                cpuobject.put("measure_time", new JSONArray().put(Telemetry.getInstance().getBuffTempFirstIndexTime())
+                        .put(Telemetry.getInstance().getLastTempUpdate()));
+                //obiekt memory
+                memoryobject.put("total", systemInfo.getTotalMemory());
+                memoryobject.put("free", systemInfo.getFreeMemory());
+                memoryobject.put("using", systemInfo.getUsedMemory());
 
+                return ResponseJSON.OKResponseToClient(new JSONObject().put("data", responseJSON));
+            }
             default:
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "json structure not valid");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad id packet");
         }
     }
 }

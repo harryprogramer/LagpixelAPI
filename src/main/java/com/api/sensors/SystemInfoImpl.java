@@ -1,12 +1,17 @@
 package com.api.sensors;
 
-import com.CPUTelemetry;
+import com.Telemetry;
 import com.profesorfalken.jsensors.JSensors;
 import com.profesorfalken.jsensors.model.components.Components;
 import com.profesorfalken.jsensors.model.components.Cpu;
 import com.profesorfalken.jsensors.model.sensors.Temperature;
 import util.Logger;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.nio.channels.SocketChannel;
+import java.util.Date;
 import java.util.List;
 
 class SystemInfoImpl implements SystemInfo {
@@ -24,13 +29,28 @@ class SystemInfoImpl implements SystemInfo {
     }
 
     @Override
-    public void startMeasure(CPUTelemetry.TYPE type) {
+    public double getInternetPing() {
+        long timeToRespond = 0x0;
+        try {
+            String hostAddress = "1.1.1.1";
+            int port = 80;
 
-    }
+            InetAddress inetAddress = InetAddress.getByName(hostAddress);
+            InetSocketAddress socketAddress = new InetSocketAddress(inetAddress, port);
 
-    @Override
-    public void stopMeasure(CPUTelemetry.TYPE type) {
+            SocketChannel sc = SocketChannel.open();
+            sc.configureBlocking(true);
 
+            Date start = new Date();
+            if (sc.connect(socketAddress)) {
+                Date stop = new Date();
+                timeToRespond = (stop.getTime() - start.getTime());
+            }
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return (double) timeToRespond;
     }
 
     @Override
@@ -71,12 +91,27 @@ class SystemInfoImpl implements SystemInfo {
 
     @Override
     public double[] getDailyTemp() {
-        return CPUTelemetry.getInstance().getDayTemp();
+        return Telemetry.getInstance().getDayTemp();
     }
 
     @Override
     public byte getDiskTemp() {
         return 0;
+    }
+
+    @Override
+    public long getUsedMemory() {
+        return (getTotalMemory() - getFreeMemory());
+    }
+
+    @Override
+    public long getFreeMemory() {
+        return Runtime.getRuntime().freeMemory();
+    }
+
+    @Override
+    public long getTotalMemory() {
+        return Runtime.getRuntime().totalMemory();
     }
 
     @Override
