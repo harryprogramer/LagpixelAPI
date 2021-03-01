@@ -28,3 +28,20 @@
 - nie czyszczący sie bufor podczas zbierania danych telemetrycznych z calego dnia
 - naprawiono petle loop zbierająca dane telemtryczne nie zawierająca zwiekszania zmiennej i++;
 - naprawiono nie aktualizujące się dane o procesorze  
+
+# PROTOCOL 1.0 SYSTEM INFO UPDATE
+
+**Dodano nowe funkcje:**
+- sprawdzanie opoznienia internetu
+- sprawdzanie calej, uzytej i wolnej pamieci ram
+- dodano wątki telemetrii
+
+**API:**
+- Dodano pakiet id '19' zwraca dane o systemie, np. pamiec ram, uzycie procesora
+
+**Zmieniono składnie jsona:**
+- nowa dokumentacja readme.md
+
+**Inne:**
+- optymalizacja systemu
+
