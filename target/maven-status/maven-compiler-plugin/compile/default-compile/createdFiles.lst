@@ -1,9 +1,7 @@
-com\CPUTelemetry.class
 util\GetTime.class
 com\LagpixelAPI.class
 com\Main.class
 com\api\sensors\SystemInfoAPI.class
-com\CPUTelemetry$3.class
 util\Resource.class
 com\api\PlayerList.class
 util\Logger.class
@@ -15,8 +13,6 @@ util\Logger$Type.class
 util\GetTime$TimeFormat.class
 com\http\Parser.class
 com\api\TestConn.class
-com\CPUTelemetry$2.class
-com\Main$2.class
 com\api\sensors\SystemInfoImpl.class
 com\sql\API.class
 com\api\KickPlayer.class
@@ -24,7 +20,6 @@ com\api\LagpixelAPI08.class
 com\api\BanPlayer.class
 util\Logger$Level.class
 util\Logger$1.class
-com\CPUTelemetry$TYPE.class
 com\api\Broadcast.class
 com\http\HTTPCore.class
 com\Main$1.class
@@ -35,7 +30,6 @@ com\api\Whitelist.class
 com\Console.class
 com\api\ResponseJSON.class
 com\Tests.class
-com\CPUTelemetry$1.class
 util\Color.class
 com\sql\SQLImpl.class
 com\api\GetTPS.class
