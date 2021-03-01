@@ -29,6 +29,8 @@
 - naprawiono petle loop zbierająca dane telemtryczne nie zawierająca zwiekszania zmiennej i++;
 - naprawiono nie aktualizujące się dane o procesorze  
 
+---
+
 # PROTOCOL 1.0 SYSTEM INFO UPDATE
 
 **Dodano nowe funkcje:**
